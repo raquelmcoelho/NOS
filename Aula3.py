@@ -5,7 +5,7 @@ a = "A persistência é o caminho do êxito"
 b = a.encode()
 c = a.encode("utf-16")
 print("\noriginal:", a,"\nutf-8:", b ,"\nutf-16:", c)
-b= b.decode() #decodificar
+b= b.decode()
 c= c.decode("utf-16")
 print("\ndecodificados:\nutf-8:", b, "\nutf-16:",c)
 
@@ -21,8 +21,7 @@ print("decodificado:", b'\xff\xfeA\x00p\x00r\x00e\x00n\x00d\x00e\x00n\x00d\x00o\
 
 
 #QUARTA QUESTÃO
-print("\n\nComo evitar o erro (UnicodeDecodeError:) utilizando o parâmetro ‘replace' ou ‘ignore' do método encode? ")
-
+print("\n\n4.Como evitar o erro (UnicodeDecodeError:) utilizando o parâmetro ‘replace' ou ‘ignore' do método encode? ")
 txt= b'\xff\xfeA\x00p\x00r\x00e\x00n\x00d\x00e\x00n\x00d\x00o\x00 \x00p\x00r\x00o\x00g\x00r\x00a\x00m\x00a\x00\xe7\x00\xe3\x00o\x00 \x00e\x00m\x00 \x00P\x00y\x00t\x00h\x00o\x00n\x00'
 print(txt.decode("utf-8", errors="replace"))
 print(txt.decode("utf-8", errors="ignore"))
