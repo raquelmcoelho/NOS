@@ -1,6 +1,7 @@
-
-"""5.Qual o tamanho ocupado na memória por um inteiro? Uma String vazia? Uma string de um único
-caractere? E por um Byte de um caractere? """
+"""
+5.Qual o tamanho ocupado na memória por um inteiro? Uma String vazia? Uma string de um único
+caractere? E por um Byte de um caractere?
+"""
 
 import sys
 lista = [1, "", "1", b"1"]
