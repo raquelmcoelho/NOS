@@ -1,4 +1,4 @@
-import math
+
 from Funções import checar
 
 #PRIMEIRA QUESTÃO
