@@ -18,8 +18,10 @@ produtos = [categorias, Azeite, Castanha, Flocos, Pacoca, Panetone, Pao, Polpa, 
 total = 0
 tk = Tk()
 tk.geometry("970x600")
+tk.configure(bg="black")
 tk.title("TABELA DE PRODUTOS")
 fram = Frame(tk)
+fram.configure(bg="black")
 fram.pack()
 
 # linha
@@ -38,11 +40,11 @@ for m, i in enumerate(produtos):
 
     # passar pelo produto
     for n, j in enumerate(i):
-        Label(fram, text=str(j)+"|", font=fonte,  fg="deeppink").grid(row=k, column=n, sticky=E)
+        Label(fram, text=str(j)+"|", font=fonte,  fg="deeppink", bg="black").grid(row=k, column=n, sticky=E)
         if n != 0:
-            Label(fram, text=espaco1, font=fonte,  fg="deeppink").grid(row=k+1, column=n, sticky=N)
+            Label(fram, text=espaco1, font=fonte,  fg="deeppink", bg="black").grid(row=k+1, column=n, sticky=N)
         else:
-            Label(fram, text=espaco2, font=fonte,  fg="deeppink").grid(row=k + 1, column=n, sticky=NE)
+            Label(fram, text=espaco2, font=fonte,  fg="deeppink", bg="black").grid(row=k + 1, column=n, sticky=NE)
     if type(i[4]) != str:
         total += i[4]
     k += 2
@@ -51,10 +53,10 @@ for m, i in enumerate(produtos):
 # função que retorna o total
 def totalf():
     fram.pack_forget()
-    Label(tk, text="R$ %d" % total, fg="deeppink", font=("times", "13")).pack()
-    Button(tk, text="Sair", font="times", fg="deeppink", bg="pink", command=tk.quit).pack()
+    Label(tk, text="R$ %d" % total, fg="deeppink", bg="black", font=("times", "13")).pack()
+    Button(tk, text="Sair", font="times", bg="deeppink", command=tk.quit).pack()
 
 
-Button(fram, text="Preço Total", font="times", fg="deeppink", bg="pink", command=totalf).grid(row=k+1, column=1)
-Button(fram, text="Sair", font="times", fg="deeppink", bg="pink", command=tk.quit).grid(row=k+2, column=1)
+Button(fram, text="Preço Total", font="times", bg="deeppink", command=totalf).grid(row=k+1, column=1)
+Button(fram, text="Sair", font="times", bg="deeppink", command=tk.quit).grid(row=k+2, column=1)
 mainloop()
