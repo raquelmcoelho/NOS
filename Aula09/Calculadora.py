@@ -2,7 +2,7 @@ from tkinter import *
 
 a = Tk()
 a.title("Calculadora")
-a.configure(bg="#aeaeea")
+a.configure(bg="yellow")
 e = Entry(a, width=50, borderwidth=5)
 e.grid(row=0, column=0, columnspan=3)
 
