@@ -11,10 +11,9 @@ resposta = 0
 while resposta != "saindo do programa :)":
     # send resposta do cliente
     enviar = input("")
-    cliente.send(enviar.encode('ascii'))
+    cliente.send(enviar.encode())
     # mostrar o send do server
     enviado = cliente.recv(1024)
-    resposta = enviado.decode('ascii')
+    resposta = enviado.decode()
     print(resposta)
-
 cliente.close()

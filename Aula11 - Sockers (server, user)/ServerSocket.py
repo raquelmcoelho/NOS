@@ -21,25 +21,25 @@ class Carro:
     def __str__(self):
         return """
 Km/Litro = %.2f
-Quantidade de Combustivel = %.2f
+Quantidade de Combustível = %.2f
 Km andados = %.2f
         """ % (self.kmporlitro, self.qtdcombustivel, self.km_andados)
 
     def obtergasolina(self):
-        return f"Seu tanque possui {self.qtdcombustivel} litros de combustivel"
+        return f"Seu tanque possui {self.qtdcombustivel} litros de combustível"
 
     def andar(self, km):
         litros = float(km) / self.kmporlitro
         if self.qtdcombustivel >= litros:
             self.qtdcombustivel -= litros
             self.km_andados += float(km)
-            return f"Voce consumiu {litros} litros e andou {km} km"
+            return f"Você consumiu {litros} litros e andou {km} km"
         else:
             return "Gasolina insuficiente"
 
     def abastecer(self, litro):
         self.qtdcombustivel += float(litro)
-        return f"Voce abasteceu {litro} litros"
+        return f"Você abasteceu {litro} litros"
 
 
 # criação do socket
@@ -47,72 +47,70 @@ serverCarro = socket(AF_INET, SOCK_STREAM)
 host = "127.0.0.1"
 port = 4321
 serverCarro.bind((host, port))
-serverCarro.listen(3)
+serverCarro.listen()
 
 
 while True:
     print("server carro está ouvindo")
     clientsocket, addr = serverCarro.accept()
-    print("Got a connection from %s %s" % (str(addr), str(clientsocket)))
+    print("Got a connection from %s\n %s" % (str(addr), str(clientsocket)))
 
     # introdução
     intro = """
-SIMULADOR DE CONSUMO DE COMBUSTIVEL
+SIMULADOR DE CONSUMO DE COMBUSTÍVEL
 seja bem vindo(a)! 
 
-instrucoes:
-- Nenhuma palavra eh acentuada devido a codificacao do programa
-- Insira o numero correspondente a opcao desejada na tabela
-- Sempre insira APENAS numeros se for requisitado alguma resposta
-- Sempre aperte ENTER para continuar
+instruções:
+- Insira o número correspondente a opção desejada na tabela
+- Sempre insira APENAS números se for requisitado alguma resposta
+- Sempre aperte ENTER para continuar e espere um pouco
 
 Mas primeiro precisamos saber quantos Km por Litro seu carro consome: 
 """
 
     # instanciação do objeto
-    clientsocket.send(intro.encode('ascii'))
+    clientsocket.send(intro.encode())
     consumo = clientsocket.recv(1024)
-    novocarro = Carro(consumo.decode('ascii'))
+    novocarro = Carro(consumo.decode())
 
     # opções de manuseio do objeto
     opc = 0
     while opc != 5:
         tabela = """
 -----------------------------------,
-Opcoes:                            |
+Opções:                            |
 -----------------------------------|
 1 - Andar                          |
 2 - Abastecer                      |
-3 - Ver quantidade de combustivel  |
+3 - Ver quantidade de combustível  |
 4 - Ver dados do seu carro         |
 5 - Sair                           |
 -----------------------------------'
-Inserir numero da opcao desejada: """
-        clientsocket.send(tabela.encode('ascii'))
+Inserir número da opção desejada: """
+        clientsocket.send(tabela.encode())
         opc1 = clientsocket.recv(1024)
-        opc = int(opc1.decode('ascii'))
+        opc = int(opc1.decode())
         print("O cliente escolheu a opção ", opc)
-        print(novocarro)
 
         if opc == 1:
-            clientsocket.send("Quantos Km voce quer andar?".encode('ascii'))
+            clientsocket.send("Quantos Km você quer andar?".encode())
             quilometro = clientsocket.recv(1024)
-            clientsocket.send(novocarro.andar(quilometro.decode('ascii')).encode('ascii'))
+            clientsocket.send(novocarro.andar(quilometro.decode()).encode())
 
         elif opc == 2:
-            clientsocket.send("Quantos litros voce deseja abastecer? ".encode('ascii'))
+            clientsocket.send("Quantos litros você deseja abastecer? ".encode())
             abastece = clientsocket.recv(1024)
-            clientsocket.send(novocarro.abastecer(abastece.decode('ascii')).encode('ascii'))
+            clientsocket.send(novocarro.abastecer(abastece.decode()).encode())
 
         elif opc == 3:
-            clientsocket.send(novocarro.obtergasolina().encode('ascii'))
+            clientsocket.send(novocarro.obtergasolina().encode())
 
         elif opc == 4:
-            clientsocket.send(novocarro.__str__().encode('ascii'))
+            clientsocket.send(novocarro.__str__().encode())
 
         elif opc == 5:
-            clientsocket.send("saindo do programa :)".encode("ascii"))
+            clientsocket.send("saindo do programa :)".encode())
             clientsocket.close()
 
         else:
-            clientsocket.send("erro, selecione uma das opcoes indicando seu numero".encode('ascii'))
+            clientsocket.send("erro, click enter para tentar novamente".encode())
