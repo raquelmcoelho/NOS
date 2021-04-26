@@ -4,7 +4,6 @@ tela.title("morse code")
 tela.geometry("300x200")
 tela.configure(background='black')
 
-
 frame1 = Frame(tela)
 frame1.configure(bg="black")
 frame1.pack()
