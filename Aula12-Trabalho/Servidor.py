@@ -95,5 +95,5 @@ while True:
             infor = acessaruserinfo(clientid)
             binfor = pickle.dumps(infor)
             clientsocket.send(binfor)
-    cleanfile()
+
     clientsocket.close()

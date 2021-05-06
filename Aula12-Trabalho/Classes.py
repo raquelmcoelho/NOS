@@ -38,7 +38,7 @@ class Cofre:
             self.user.adicionardadonumero(dados1)
 
     def adicionarsenha(self, cadeado, senha):
-        self.cofre[str(cadeado)] = str(senha)
+        self.cofre[str(cadeado.lower())] = str(senha)
 
     def criarsenha(self, tamanho):
         caracteres = string.digits + string.ascii_letters + string.punctuation
