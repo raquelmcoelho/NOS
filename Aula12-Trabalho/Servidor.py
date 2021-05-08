@@ -12,15 +12,17 @@ port = 9999
 servidor.bind((host, port))
 print("servidor binded")
 
+
+# loop infinito onde o primeiro send do cliente chama a "função" do servidor
 while True:
     servidor.listen(5)
     print("Aguardando conexão...")
     clientsocket, adrr = servidor.accept()
     print("conectado a %s" % (str(clientsocket) + str(adrr)))
 
-    client = ""
     data = ""
     while data != "sair":
+        client = ""  # zerar o cliente toda vez que recebe mensagem
         # sempre que o cliente quiser manusear o cliente ele manda o nome do manuseio/método
         recebido = clientsocket.recv(4096)
         data = recebido.decode()
@@ -59,7 +61,7 @@ while True:
             infor = pickle.loads(binfor)
             print("informação recebida:", infor)
             client = Cofre(infor[2]["nome"], infor[2]["cofre"])
-            # copiando dados dados
+            # copiando dados
             for i in range(len(infor[1])):
                 if i <= 2:
                     client.adddados(infor[1][i], 1)

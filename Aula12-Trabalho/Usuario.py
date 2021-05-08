@@ -383,10 +383,15 @@ def tela5(nome, senha):
                 # retorna um método único para cada botão criado
                 return lambda: check(cadeado, client.cofre[cadeado])
 
-            def labelbutton(frame, txtlabel, txtbutton, cadeado, place, place2):
+            def labelbutton(cadeado, Y):
                 # cria um label e um botão do lado
-                lbl(frame, txtlabel, place)
-                b(frame, txtbutton, definir_metodo(cadeado), place2)
+                # todo se for cofre ele troca o id tbm
+                # labelbutton(frame4, "check", i2, [0, y, 0.10, 0.32], [0.80, y, 0.10, 0.20])
+                Label(frame4, text="%s :" % cadeado, font=FONT,
+                      bg=BG, fg=FG, anchor=E, justify=RIGHT). place(relx=0.05, rely=Y, relheight=0.10, relwidth=0.30)
+                Label(frame4, text="%10s" % client.cofre[cadeado], font=FONT,
+                      bg=BG, fg=FG, anchor=E, justify=RIGHT).place(relx=0.35, rely=Y, relheight=0.10, relwidth=0.35)
+                b(frame4, "check", definir_metodo(cadeado), [0.80, Y, 0.10, 0.20])
             #
             # GUI da tela5
             #
@@ -401,14 +406,16 @@ def tela5(nome, senha):
             limpaframe(frame2)
             lbl(frame0, "Seja bem vindo(a) %s" % client.user.name, [0.15, 0, 0.10, 0.70])
 
-            # enumerar todas as senhas do cofre e criar um label e um botão para cada uma
-            y = 0
-            for j2, i2 in enumerate(client.cofre):
-                # não criar para o clienteid nem para o nome
-                if i2 != "clientid" and i2 != "nome":
-                    labelbutton(frame4, "%15s:%20s%20s" % (i2, " ",client.cofre[i2]),
-                                "check", i2, [0, y, 0.10, 0.75], [0.80, y, 0.10, 0.20])
-                    y += 1 / 10
+            if len(client.cofre) > 3:
+                # enumerar todas as senhas do cofre e criar um label e um botão para cada uma
+                y = 0
+                for j2, i2 in enumerate(client.cofre):
+                    # não criar para o clienteid nem para o nome
+                    if i2 != "clientid" and i2 != "nome" and i2 != "cofre":
+                        labelbutton(i2, y)
+                        y += 1 / 10
+            else:
+                lbl(frame4, "Adicione suas senhas apertando em Add/Replace", [0.05, 0.10, 0.30, 0.90])
 
             # botões de manuseio
             b(frame2, "Add/Replace senha", lambda: add(), [0.10, 0.18, 0.15, 0.40])

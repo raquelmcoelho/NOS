@@ -59,15 +59,9 @@ class Cofre:
         a2, b2 = self.checarrequisitos(senha)
         txt = a + a1 + a2
         total = -b - b1 + b2
-
-        if len(senha) >= 6:
-            forte += 1
-        elif len(senha) < 6:
-            txt += f"Sua senha tem menos de 6 dígitos\n"
-            fraqueza += 1
+        # todo reverter requisito 6 asteriscos
         total += forte - fraqueza
-        # retornando nível de fraqueza e nível de quão forte a senha é
-        # 6 e 5 são se todos os casos de forte e fraco acontecerem
+        # retornando nível de segurança senha é
         if total < 0:
             return "senha extremamente ruim", txt
         if total == 0:
@@ -94,6 +88,13 @@ class Cofre:
             else:
                 txt += f"Não encontramos um(a) {i} na sua senha\n"
                 fraqueza += 1
+
+        if len(elemento) >= 6:
+            forte += 1
+        elif len(elemento) < 6:
+            txt += f"Sua senha tem menos de 6 dígitos\n"
+            fraqueza += 1
+
         total = forte - fraqueza
         return txt, total
 
