@@ -65,10 +65,14 @@ def labelentry(frame, txt, p, p2):
     return ent(frame, p2)
 
 
-def logo(frame, img, p):
-    Label(frame, bg=FG, image=img).place(relx=p[0], rely=p[1], relheight=p[2], relwidth=p[3])
-    Label(frame, text="Gerenciador\n de senhas", font=FONT, bg=BG, fg=FG, highlightthickness=10,
-          highlightbackground=FG).place(relx=0.55, rely=0.25, relheight=0.50, relwidth=0.25)
+def logo(miniframe, img):
+    miniframe["bg"] = FG
+    miniframe["bd"] = 10
+    miniframe["relief"] = "ridge"
+    miniframe.place(relx=0.25, rely=0.05, relheight=0.20, relwidth=0.50)
+    Label(miniframe, bg=FG, image=img).place(relx=0.05, rely=0.05, relheight=0.90, relwidth=0.45)
+    Label(miniframe, text="Key\nManager", font=("Century Gothic", "14"),
+          bg=FG, fg=BG, justify=LEFT, anchor=W).place(relx=0.50, rely=0.05, relheight=0.90, relwidth=0.45)
 
 
 def lbl(frame, txt, p, anc=CENTER, just=CENTER):

@@ -31,7 +31,7 @@ def requestsocketreplace(client):
 # início do app
 def tela1():
     global img
-    logo(frame0, img, [0.25, 0.25, 0.50, 0.25])
+    logo(miniframe, img)
     b(frame1, "Vamos começar", lambda: tela2(), [0.33, 0, 0.15, 0.33])
     b(frame1, "Mudar tema", lambda: mudartema(frame0, frame1, frame2, tk, lambda: tela1()), [0.33, 0.20, 0.15, 0.33])
 
@@ -46,6 +46,7 @@ def tela2():
 
 # tela de login
 def tela3():
+    miniframe.destroy()
     limpaframe(frame0)
     limpaframe(frame1)
     limpaframe(frame2)
@@ -207,7 +208,7 @@ def tela5(nome, senha):
 
             # funções do botão check
             def troca3(cadeado3, key2):
-                if len(client.cofre) == 11:
+                if len(client.cofre) == 11 and cadeado3 not in client.cofre:
                     messagebox.showinfo("premium", "Pague nossa assinatura Premium\npor apenas 5,99 para ter acesso a"
                                                    " senhas ilimitadas ☺")
                     tela5(nomecliente, senhacliente)
@@ -227,7 +228,7 @@ def tela5(nome, senha):
             def troca2(cadeado2, key):
                 limpaframe(frame1)
                 nivel, texto = client.checarsenha(key)
-                lbl(frame1, cadeado2 + " : " + key, [0.33, 0, 0.10, 0.33])
+                lbl(frame1, cadeado2 + " : " + key, [0.25, 0, 0.10, 0.50])
                 lbl(frame1, nivel + "\n" + texto, [0, 0.10, 0.60, 1])
                 lbl(frame1, "Deseja por como a nova senha?", [0, 0.70, 0.10, 1])
                 b(frame1, "sim", lambda: troca3(cadeado2, key), [0.50, 0.85, 0.10, 0.40])
@@ -251,7 +252,7 @@ def tela5(nome, senha):
                 limpaframe(frame2)
                 print(f"checando a senha {senhacheck} e o cadeado {cadeadocheck}")
                 nivel, texto = client.checarsenha(senhacheck)
-                lbl(frame1, cadeadocheck + " : " + senhacheck, [0.33, 0, 0.10, 0.33])
+                lbl(frame1, cadeadocheck + " : " + senhacheck, [0.25, 0, 0.10, 0.50])
                 lbl(frame1, nivel + "\n" + texto, [0, 0.10, 0.80, 1])
                 b(frame1, "trocar", lambda: troca(cadeadocheck), [0.33, 0.90, 0.10, 0.33])
                 b(frame2, "voltar", lambda: tela5(nomecliente, senhacliente), [0.33, 0.10, 0.15, 0.33])
@@ -304,10 +305,10 @@ def tela5(nome, senha):
 tk = Tk()
 tk.title("Key Manager")
 tk.geometry("500x600+433+84")
-tk.iconbitmap("images/keylogogrande.ico")
+tk.iconbitmap("images/lock.ico")
 tk["bg"] = BG
 tk.protocol("WM_DELETE_WINDOW", lambda: fecharjanela())
-img = ImageTk.PhotoImage(Image.open("images/logokey.png"))
+img = ImageTk.PhotoImage(Image.open("images/lock.png"))
 
 frame0 = Frame(tk, bg=BG)
 frame0.place(relx=0, rely=0, relheight=0.33, relwidth=1)
@@ -315,6 +316,7 @@ frame1 = Frame(tk, bg=BG)
 frame1.place(relx=0, rely=0.33, relheight=0.33, relwidth=1)
 frame2 = Frame(tk, bg=BG)
 frame2.place(relx=0, rely=0.66, relheight=0.33, relwidth=1)
+miniframe = Frame(tk)
 
 # chamar primeira tela
 tela1()
