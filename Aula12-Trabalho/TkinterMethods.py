@@ -41,7 +41,8 @@ def mudarcor(framename):
 
 def mudartema(f, f1, f2, tk_, func):
     global BG, FG, escolhadetema
-    fontes = [("#ff0066", "#ffffff"), ("#ffff00", "#0b4b88"), ("#eeeeee", "#d10000"), ("#00ffff", "#222222")]
+    fontes = [("#ff9900", "#4d004d"), ("#ff0066", "#ffffff"), ("#ffff00", "#0b4b88"), ("#eeeeee", "#d10000"),
+              ("#00ffff", "#222222")]
     escolha = escolhadetema % len(fontes)
     print("escolha de fonte", escolhadetema, "%", len(fontes), "=",  escolha, fontes[escolha])
     FG = fontes[escolha][0]
@@ -64,8 +65,15 @@ def labelentry(frame, txt, p, p2):
     return ent(frame, p2)
 
 
+def logo(frame, img, p):
+    Label(frame, bg=FG, image=img).place(relx=p[0], rely=p[1], relheight=p[2], relwidth=p[3])
+    Label(frame, text="Gerenciador\n de senhas", font=FONT, bg=BG, fg=FG, highlightthickness=10,
+          highlightbackground=FG).place(relx=0.55, rely=0.25, relheight=0.50, relwidth=0.25)
+
+
 def lbl(frame, txt, p, anc=CENTER, just=CENTER):
-    Label(frame, text=txt, font=FONT, bg=BG, fg=FG, anchor=anc, justify=just).place(relx=p[0], rely=p[1], relheight=p[2], relwidth=p[3])
+    Label(frame, text=txt, font=FONT, bg=BG, fg=FG, anchor=anc,
+          justify=just).place(relx=p[0], rely=p[1], relheight=p[2], relwidth=p[3])
 
 
 def b(frame, txt, command, p):

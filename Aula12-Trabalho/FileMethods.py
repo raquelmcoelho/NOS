@@ -22,7 +22,7 @@ def atualizar(dados):
 def deleteuser(user):
     txt = ler()
     for i in txt:
-        if i[0] == user[0]:
+        if i[2]["nome"] == user[2]["nome"]:
             txt.remove(i)
             salvar(txt)
 

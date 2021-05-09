@@ -1,6 +1,7 @@
 # NO CLIENTE MANUSEAREMOS APENAS UMA CÓPIA DO COFRE FORNECIDA PELO SERVIDOR
 from tkinter import messagebox
 from TkinterMethods import *
+from PIL import Image, ImageTk
 from Classes import *
 from socket import *
 from random import *
@@ -29,7 +30,8 @@ def requestsocketreplace(client):
 
 # início do app
 def tela1():
-    lbl(frame0, "Gerenciador de senhas", [0.25, 0.20, 0.70, 0.5])
+    global img
+    logo(frame0, img, [0.25, 0.25, 0.50, 0.25])
     b(frame1, "Vamos começar", lambda: tela2(), [0.33, 0, 0.15, 0.33])
     b(frame1, "Mudar tema", lambda: mudartema(frame0, frame1, frame2, tk, lambda: tela1()), [0.33, 0.20, 0.15, 0.33])
 
@@ -205,15 +207,22 @@ def tela5(nome, senha):
 
             # funções do botão check
             def troca3(cadeado3, key2):
-                limpaframe(frame1)
-                if cadeado3 == "cofre":
-                    messagebox.showerror("erro", "Não é possível substituir o cofre")
-                    add()
+                if len(client.cofre) == 11:
+                    messagebox.showinfo("premium", "Pague nossa assinatura Premium\npor apenas 5,99 para ter acesso a"
+                                                   " senhas ilimitadas ☺")
+                    tela5(nomecliente, senhacliente)
+
                 else:
+                    limpaframe(frame1)
+                    if cadeado3 == "cofre":
+                        client.adicionarsenha("clientid", nomecliente + key2)
+                        senhacliente2 = key2
+                    else:
+                        senhacliente2 = senhacliente
                     client.adicionarsenha(cadeado3, key2)
                     message = requestsocketreplace(client)
                     if message == "seu cliente foi substituido":
-                        tela5(nomecliente, senhacliente)
+                        tela5(nomecliente, senhacliente2)
 
             def troca2(cadeado2, key):
                 limpaframe(frame1)
@@ -253,8 +262,7 @@ def tela5(nome, senha):
             def labelbutton(cadeado, ytam):
                 lbl(frame1, "%s :" % cadeado, [0, ytam, 0.10, 0.40], anc=E, just=RIGHT)
                 lbl(frame1, "%10s" % client.cofre[cadeado], [0.40, ytam, 0.10, 0.40], anc=E, just=RIGHT)
-                if cadeado != "cofre":
-                    b(frame1, "check", definir_metodo(cadeado), [0.80, ytam, 0.10, 0.20])
+                b(frame1, "check", definir_metodo(cadeado), [0.80, ytam, 0.10, 0.20])
 
             # GUI da tela5
             frame1.place(rely=0.10, relheight=0.56)
@@ -266,14 +274,22 @@ def tela5(nome, senha):
             limpaframe(frame2)
             lbl(frame0, "Seja bem vindo(a) %s" % client.user.name, [0.15, 0, 0.10, 0.70])
 
-            if len(client.cofre) > 3:
-                y = 0
+            if len(client.cofre) == 3:
+                lbl(frame1,
+                    """Adicione novas senhas com o botão Add/Replace
+                        p.s : O cadeado cofre mostra a senha 
+                        do próprio gerenciador de chaves""", [0, 0, 1, 1])
+
+            elif 11 >= len(client.cofre) > 3:
+                b(frame1, "______Cadeados______|________Senhas________|__Botão__",
+                  lambda: messagebox.showinfo("info", "1- Cadeados: lugar que a chave abre" +
+                                              "\n2- O cadeado cofre se refere ao próprio gerenciador"
+                                              "\n3- Adicione novas senhas com o botão Add/Replace."), [0, 0, 0.1, 1])
+                y = 0.1
                 for j2, i2 in enumerate(client.cofre):
                     if i2 != "clientid" and i2 != "nome":
                         labelbutton(i2, y)
                         y += 1 / 10
-            else:
-                lbl(frame1, "Adicione novas senhas com o botão Add/Replace", [0, 0, 0.1, 1])
 
             # botões de manuseio
             b(frame2, "Add/Replace senha", lambda: add(), [0.10, 0.18, 0.15, 0.40])
@@ -291,6 +307,7 @@ tk.geometry("500x600+433+84")
 tk.iconbitmap("images/keylogogrande.ico")
 tk["bg"] = BG
 tk.protocol("WM_DELETE_WINDOW", lambda: fecharjanela())
+img = ImageTk.PhotoImage(Image.open("images/logokey.png"))
 
 frame0 = Frame(tk, bg=BG)
 frame0.place(relx=0, rely=0, relheight=0.33, relwidth=1)

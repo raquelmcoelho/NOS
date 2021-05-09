@@ -121,7 +121,7 @@ class Cofre:
                 repeticao += 1
 
         if repeticao > 1:
-            txt += "essa senha já foi utilizada em outro cadeado"
+            txt += "essa senha já foi utilizada em outro cadeado\n"
             fraqueza += 1
 
         return txt, fraqueza
