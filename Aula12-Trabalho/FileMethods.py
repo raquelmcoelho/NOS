@@ -28,12 +28,8 @@ def deleteuser(user):
 
 
 def replace(substituto):
-    txt = ler()
-    for i in txt:
-        if i[0] == substituto[0]:
-            txt.remove(i)
-            txt.append(substituto)
-            salvar(txt)
+    deleteuser(substituto)
+    atualizar(substituto)
 
 
 def acessaruserinfo(clientid):

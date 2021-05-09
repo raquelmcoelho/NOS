@@ -52,15 +52,12 @@ class Cofre:
 
     def checarsenha(self, senha):
         senha = str(senha)
-        fraqueza = 0
-        forte = 0
         a, b = self.iterardados(senha)
         a1, b1 = self.iterarcofre(senha)
         a2, b2 = self.checarrequisitos(senha)
         txt = a + a1 + a2
         total = -b - b1 + b2
-        # todo reverter requisito 6 asteriscos
-        total += forte - fraqueza
+        print(f"os metodos deram {txt} e  total = {total}")
         # retornando nível de segurança senha é
         if total < 0:
             return "senha extremamente ruim", txt
@@ -104,7 +101,7 @@ class Cofre:
         fraqueza = 0
         txt = ""
         for i in self.user.dados:
-            if len(re.findall("%s" % i, elemento.lower())) > 0:
+            if len(re.findall(re.escape("%s" % i), elemento.lower())) > 0:
                 txt += "foi encontrado o dado '%s' na sua senha\n" % i
                 fraqueza += 1
         return txt, fraqueza
@@ -113,15 +110,19 @@ class Cofre:
         # iterando cofre
         txt = ""
         fraqueza = 0
+        repeticao = 0
         for i in self.cofre:
-            if len(re.findall("%s" % i, elemento.lower())) > 0:
+            # evitar por nome de cadeados nas senhas
+            if len(re.findall(re.escape("%s" % i), elemento.lower())) > 0:
                 txt += f"foi encontrado o nome do cadeado '{i}' na sua senha\n"
                 fraqueza += 1
 
-            if len(re.findall("%s" % self.cofre[i], elemento.lower())) > 0:
-                fraqueza += 1
-        if fraqueza > 2:
-            txt += f"essa senha já foi utilizada em outro cadeado\n"
+            if re.match(re.escape("%s" % self.cofre[i]), elemento) is not None:
+                repeticao += 1
+
+        if repeticao > 1:
+            txt += "essa senha já foi utilizada em outro cadeado"
+            fraqueza += 1
 
         return txt, fraqueza
 
@@ -136,6 +137,7 @@ class Cofre:
                 return {i: self.cofre[i]}
 
     def save(self):
+
         dadoscofre = namedtuple("user", ["clientid", "dados", "cofre"])
         dadoscliente = dadoscofre(clientid=self.cofre["clientid"],
                                   dados=self.user.dados,

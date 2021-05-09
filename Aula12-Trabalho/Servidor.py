@@ -4,61 +4,27 @@ from socket import *
 from Classes import *
 import pickle
 
-
 # criando, binding e listening o servidor
 servidor = socket(AF_INET, SOCK_STREAM)
-host = "127.0.0.1"
-port = 9999
-servidor.bind((host, port))
+servidor.bind(("127.0.0.1", 9999))
 print("servidor binded")
-
 
 # loop infinito onde o primeiro send do cliente chama a "função" do servidor
 while True:
-    servidor.listen(5)
+    servidor.listen()
     print("Aguardando conexão...")
     clientsocket, adrr = servidor.accept()
-    print("conectado a %s" % (str(clientsocket) + str(adrr)))
+    print("conectado a um cliente ☺")
 
     data = ""
     while data != "sair":
-        client = ""  # zerar o cliente toda vez que recebe mensagem
-        # sempre que o cliente quiser manusear o cliente ele manda o nome do manuseio/método
-        recebido = clientsocket.recv(4096)
-        data = recebido.decode()
+        client = ""
+        data = clientsocket.recv(4096).decode()
         print("MÉTODO ESCOLHIDO: ", data)
 
-        if data == "salvarnovocliente":
-            bclient = clientsocket.recv(4096)
-            client = pickle.loads(bclient)
-            print("cliente recebido:", client)
-            atualizar(client.save())
-            print("como o file json está agora:\n", ler())
-            clientsocket.send('Seu cliente foi salvo'.encode())
-
-        elif data == "adddados":
-            # adicionar dados recebidos a um cliente recebido
-            bdados = clientsocket.recv(4096)
-            dados = pickle.loads(bdados)
-            print("dados recebidos", type(dados), "\n", dados)
-            bclient = clientsocket.recv(4096)
-            client = pickle.loads(bclient)
-            print("cliente recebido para salvar dados:", client)
-            for i1 in range(len(dados)):
-                if i1 <= 2:
-                    # adicionando só numeros
-                    client.adddados(dados[i1], 1)
-                else:
-                    # adicionando strings
-                    client.adddados(dados[i1], 0)
-            replace(client.save())
-            print("o file ficou assim depois de adicionar os dados:zn", ler())
-            clientsocket.send('Seus dados foram salvos'.encode())
-
-        elif data == "pegarclient":
+        if data == "pegarclient":
             # construir e enviar cópia do cliente para manuseio a partir da infor recebida
-            binfor = clientsocket.recv(4096)
-            infor = pickle.loads(binfor)
+            infor = pickle.loads(clientsocket.recv(4096))
             print("informação recebida:", infor)
             client = Cofre(infor[2]["nome"], infor[2]["cofre"])
             # copiando dados
@@ -71,31 +37,26 @@ while True:
             for i1 in zip(infor[2].keys(), infor[2].values()):
                 client.adicionarsenha(i1[0], i1[1])
 
-            bclient = pickle.dumps(client)
-            clientsocket.send(bclient)
+            clientsocket.send(pickle.dumps(client))
             print("cliente enviado:", client)
 
         elif data == "replace":
-            bclient = clientsocket.recv(4096)
-            client = pickle.loads(bclient)
+            client = pickle.loads(clientsocket.recv(4096))
             print("cliente recebido\n", client)
             replace(client.save())
             print("como o file está agora", ler())
             clientsocket.send("seu cliente foi substituido".encode())
 
         elif data == "deleteuser":
-            bclient = clientsocket.recv(4096)
-            client = pickle.loads(bclient)
+            client = pickle.loads(clientsocket.recv(4096))
             print("cliente recebido\n", client)
             deleteuser(client.save())
             print("como o file está agora", ler())
             clientsocket.send("seu cliente foi deletado".encode())
 
         elif data == "acessaruserinfo":
-            bclientid = clientsocket.recv(4096)
-            clientid = bclientid.decode()
+            clientid = clientsocket.recv(4096).decode()
             infor = acessaruserinfo(clientid)
-            binfor = pickle.dumps(infor)
-            clientsocket.send(binfor)
+            clientsocket.send(pickle.dumps(infor))
 
     clientsocket.close()
