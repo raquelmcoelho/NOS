@@ -74,10 +74,10 @@ def tela4(nome, senha):
             for dado in range(len(dados)):
                 dadoh = "".join(re.findall(r"\d+", dados[dado]))
                 dados.append(dadoh)
-            for _ in range(0, 3, 1):
+            for _ in range(3):
                 dados.remove(dados[0])
             dados += entrys[3].get().strip().split(" ") + entrys[4].get().strip().split(" ")
-            print("dados:", dados)
+            print("dados: ", dados)
             if dados.count("") > 0:
                 messagebox.showinfo("erro", "Você esqueceu de preencher um espaço corretamente")
                 tela4(nomecliente, senhacliente)
@@ -95,6 +95,7 @@ def tela4(nome, senha):
                 if resposta == "seu cliente foi substituido":
                     tela5(nomecliente, senhacliente)
 
+        # GUI
         limpaframe(frame0)
         limpaframe(frame1)
         limpaframe(frame2)
@@ -104,8 +105,8 @@ def tela4(nome, senha):
         txts = ["Data de nascimento:", "N° de telefone:", "Número importante:", "Nome completo:", "Nome importante:"]
         # criar entrys para cada dado
         j = 0
-        for i in range(1, 6):
-            entrys[i - 1] = labelentry(frame1, txts[i - 1], [0.05, j, 0.2, 0.40], [0.45, j, 0.2, 0.50])
+        for i in range(5):
+            entrys[i] = labelentry(frame1, txts[i], [0.05, j, 0.2, 0.40], [0.45, j, 0.2, 0.50])
             j += 0.2
 
         b(frame2, "Continuar", lambda: continuar(), [0.50, 0.30, 0.15, 0.25])
@@ -287,7 +288,7 @@ def tela5(nome, senha):
                                               "\n2- O cadeado cofre se refere ao próprio gerenciador"
                                               "\n3- Adicione novas senhas com o botão Add/Replace."), [0, 0, 0.1, 1])
                 y = 0.1
-                for j2, i2 in enumerate(client.cofre):
+                for i2 in client.cofre:
                     if i2 != "clientid" and i2 != "nome":
                         labelbutton(i2, y)
                         y += 1 / 10
@@ -308,7 +309,7 @@ tk.geometry("500x600+433+84")
 tk.iconbitmap("images/lock.ico")
 tk["bg"] = BG
 tk.protocol("WM_DELETE_WINDOW", lambda: fecharjanela())
-img = ImageTk.PhotoImage(Image.open("images/lock.png"))
+img = ImageTk.PhotoImage(Image.open("images/key134.png"))
 
 frame0 = Frame(tk, bg=BG)
 frame0.place(relx=0, rely=0, relheight=0.33, relwidth=1)

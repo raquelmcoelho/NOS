@@ -1,8 +1,8 @@
 from tkinter import *
 
 # padrões
-BG = "#222222"
-FG = "#00ffff"
+BG = "#00ffff"
+FG = "#222222"
 FONT = ("Century Gothic", "12")
 escolhadetema = 0
 
@@ -41,8 +41,8 @@ def mudarcor(framename):
 
 def mudartema(f, f1, f2, tk_, func):
     global BG, FG, escolhadetema
-    fontes = [("#ff9900", "#4d004d"), ("#ff0066", "#ffffff"), ("#ffff00", "#0b4b88"), ("#eeeeee", "#d10000"),
-              ("#00ffff", "#222222")]
+    fontes = [("#4d004d", "#ff9900"), ("#ff0066", "#ffffff"), ("#0b4b88", "#ffff00"), ("#d10000", "#ffffff"),
+              ("#222222", "#00ffff")]
     escolha = escolhadetema % len(fontes)
     print("escolha de fonte", escolhadetema, "%", len(fontes), "=",  escolha, fontes[escolha])
     FG = fontes[escolha][0]
@@ -65,16 +65,6 @@ def labelentry(frame, txt, p, p2):
     return ent(frame, p2)
 
 
-def logo(miniframe, img):
-    miniframe["bg"] = FG
-    miniframe["bd"] = 10
-    miniframe["relief"] = "ridge"
-    miniframe.place(relx=0.25, rely=0.05, relheight=0.20, relwidth=0.50)
-    Label(miniframe, bg=FG, image=img).place(relx=0.05, rely=0.05, relheight=0.90, relwidth=0.45)
-    Label(miniframe, text="Key\nManager", font=("Century Gothic", "14"),
-          bg=FG, fg=BG, justify=LEFT, anchor=W).place(relx=0.50, rely=0.05, relheight=0.90, relwidth=0.45)
-
-
 def lbl(frame, txt, p, anc=CENTER, just=CENTER):
     Label(frame, text=txt, font=FONT, bg=BG, fg=FG, anchor=anc,
           justify=just).place(relx=p[0], rely=p[1], relheight=p[2], relwidth=p[3])
@@ -89,3 +79,8 @@ def ent(frame, p2):
     e = Entry(frame, font=FONT, bg="#eeeeee")
     e.place(relx=p2[0], rely=p2[1], relheight=p2[2], relwidth=p2[3])
     return e
+
+
+def logo(miniframe, img):
+    miniframe.place(relx=0, rely=0, relheight=0.25, relwidth=1)
+    Label(miniframe, bg=FG, image=img).place(relx=0, rely=0, relheight=1, relwidth=1)

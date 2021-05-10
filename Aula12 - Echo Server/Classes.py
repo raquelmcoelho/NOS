@@ -57,7 +57,7 @@ class Cofre:
         a2, b2 = self.checarrequisitos(senha)
         txt = a + a1 + a2
         total = -b - b1 + b2
-        print(f"os metodos deram {txt} e  total = {total}")
+        print(f"os metodos deram:\n {txt} e  total = {total}")
         # retornando nível de segurança senha é
         if total < 0:
             return "senha extremamente ruim", txt
@@ -71,36 +71,12 @@ class Cofre:
             if total >= 5:
                 return "senha forte", txt
 
-    def checarrequisitos(self, elemento):
-        import re
-        fraqueza = 0
-        forte = 0
-        txt = ""
-        # checando se tem no mínimo uma letra maiúscula, uma minúscula, um dígito e 6 caracteres
-        cond = {"dígito": string.digits, "símbolo": string.punctuation, "minúscula": string.ascii_lowercase,
-                "maiúscula": string.ascii_uppercase}
-        for i in cond:
-            if len(re.findall("[%s]" % (cond[i]), elemento)) > 0:
-                forte += 1
-            else:
-                txt += f"Não encontramos um(a) {i} na sua senha\n"
-                fraqueza += 1
-
-        if len(elemento) >= 6:
-            forte += 1
-        elif len(elemento) < 6:
-            txt += f"Sua senha tem menos de 6 dígitos\n"
-            fraqueza += 1
-
-        total = forte - fraqueza
-        return txt, total
-
     def iterardados(self, elemento):
         import re
         # iterando dados
         fraqueza = 0
         txt = ""
-        for i in self.user.dados:
+        for i in self.dados:
             if len(re.findall(re.escape("%s" % i), elemento.lower())) > 0:
                 txt += "foi encontrado o dado '%s' na sua senha\n" % i
                 fraqueza += 1
@@ -126,18 +102,31 @@ class Cofre:
 
         return txt, fraqueza
 
-    def acesso(self, chave):
-        for i in zip(self.cofre.keys(), self.cofre.values()):
-            if chave in i:
-                return i
+    def checarrequisitos(self, elemento):
+        import re
+        fraqueza = 0
+        forte = 0
+        txt = ""
+        # checando se tem no mínimo uma letra maiúscula, uma minúscula, um dígito e 6 caracteres
+        cond = {"dígito": string.digits, "símbolo": string.punctuation, "minúscula": string.ascii_lowercase,
+                "maiúscula": string.ascii_uppercase}
+        for i in cond:
+            if len(re.findall("[%s]" % (cond[i]), elemento)) > 0:
+                forte += 1
+            else:
+                txt += f"Não encontramos um(a) {i} na sua senha\n"
+                fraqueza += 1
 
-    def acessarpelocadeado(self, key):
-        for i in self.cofre:
-            if key == i:
-                return {i: self.cofre[i]}
+        if len(elemento) >= 6:
+            forte += 1
+        elif len(elemento) < 6:
+            txt += f"Sua senha tem menos de 6 dígitos\n"
+            fraqueza += 1
+
+        total = forte - fraqueza
+        return txt, total
 
     def save(self):
-
         dadoscofre = namedtuple("user", ["clientid", "dados", "cofre"])
         dadoscliente = dadoscofre(clientid=self.cofre["clientid"],
                                   dados=self.user.dados,

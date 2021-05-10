@@ -22,7 +22,12 @@ while True:
         data = clientsocket.recv(4096).decode()
         print("MÉTODO ESCOLHIDO: ", data)
 
-        if data == "pegarclient":
+        if data == "acessaruserinfo":
+            clientid = clientsocket.recv(4096).decode()
+            infor = acessaruserinfo(clientid)
+            clientsocket.send(pickle.dumps(infor))
+
+        elif data == "pegarclient":
             # construir e enviar cópia do cliente para manuseio a partir da infor recebida
             infor = pickle.loads(clientsocket.recv(4096))
             print("informação recebida:", infor)
@@ -53,10 +58,5 @@ while True:
             deleteuser(client.save())
             print("como o file está agora", ler())
             clientsocket.send("seu cliente foi deletado".encode())
-
-        elif data == "acessaruserinfo":
-            clientid = clientsocket.recv(4096).decode()
-            infor = acessaruserinfo(clientid)
-            clientsocket.send(pickle.dumps(infor))
 
     clientsocket.close()
