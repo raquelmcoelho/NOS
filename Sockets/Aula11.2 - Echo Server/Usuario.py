@@ -309,7 +309,7 @@ tk.geometry("500x600+433+84")
 tk.iconbitmap("images/lock.ico")
 tk["bg"] = BG
 tk.protocol("WM_DELETE_WINDOW", lambda: fecharjanela())
-img = ImageTk.PhotoImage(Image.open("images/key134.png"))
+img = ImageTk.PhotoImage(Image.open("images/Key134.png"))
 
 frame0 = Frame(tk, bg=BG)
 frame0.place(relx=0, rely=0, relheight=0.33, relwidth=1)

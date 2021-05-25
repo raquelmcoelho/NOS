@@ -19,6 +19,31 @@ class User:
 
 # class bank methods
 class Cofre:
+    @staticmethod
+    def checarrequisitos(elemento):
+        import re
+        fraqueza = 0
+        forte = 0
+        txt = ""
+        # checando se tem no mínimo uma letra maiúscula, uma minúscula, um dígito e 6 caracteres
+        cond = {"dígito": string.digits, "símbolo": string.punctuation, "minúscula": string.ascii_lowercase,
+                "maiúscula": string.ascii_uppercase}
+        for i in cond:
+            if len(re.findall("[%s]" % (cond[i]), elemento)) > 0:
+                forte += 1
+            else:
+                txt += f"Não encontramos um(a) {i} na sua senha\n"
+                fraqueza += 1
+
+        if len(elemento) >= 6:
+            forte += 1
+        elif len(elemento) < 6:
+            txt += f"Sua senha tem menos de 6 dígitos\n"
+            fraqueza += 1
+
+        total = forte - fraqueza
+        return txt, total
+
     def __init__(self, username, senha):
         self.user = User(username)
         self.cofre = {"clientid": self.user.name + str(senha), "nome": self.user.name, "cofre": str(senha)}
@@ -101,30 +126,6 @@ class Cofre:
             fraqueza += 1
 
         return txt, fraqueza
-
-    def checarrequisitos(self, elemento):
-        import re
-        fraqueza = 0
-        forte = 0
-        txt = ""
-        # checando se tem no mínimo uma letra maiúscula, uma minúscula, um dígito e 6 caracteres
-        cond = {"dígito": string.digits, "símbolo": string.punctuation, "minúscula": string.ascii_lowercase,
-                "maiúscula": string.ascii_uppercase}
-        for i in cond:
-            if len(re.findall("[%s]" % (cond[i]), elemento)) > 0:
-                forte += 1
-            else:
-                txt += f"Não encontramos um(a) {i} na sua senha\n"
-                fraqueza += 1
-
-        if len(elemento) >= 6:
-            forte += 1
-        elif len(elemento) < 6:
-            txt += f"Sua senha tem menos de 6 dígitos\n"
-            fraqueza += 1
-
-        total = forte - fraqueza
-        return txt, total
 
     def save(self):
         dadoscofre = namedtuple("user", ["clientid", "dados", "cofre"])

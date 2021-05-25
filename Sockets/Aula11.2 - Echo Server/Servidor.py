@@ -3,19 +3,16 @@ from FileMethods import *
 from socket import *
 from Classes import *
 import pickle
+import threading
 
 # criando, binding e listening o servidor
 servidor = socket(AF_INET, SOCK_STREAM)
 servidor.bind(("127.0.0.1", 9999))
 print("servidor binded")
+servidor.listen()
 
-# loop infinito onde o primeiro send do cliente chama a "função" do servidor
-while True:
-    servidor.listen()
-    print("Aguardando conexão...")
-    clientsocket, adrr = servidor.accept()
-    print("conectado a um cliente ☺")
 
+def usar(clientsocket):
     data = ""
     while data != "sair":
         client = ""
@@ -60,3 +57,12 @@ while True:
             clientsocket.send("seu cliente foi deletado".encode())
 
     clientsocket.close()
+
+
+# loop infinito onde o primeiro send do cliente chama a "função" do servidor
+while True:
+    print("Aguardando conexão...")
+    csocket, adrr = servidor.accept()
+    print("conectado a um cliente ☺")
+    t = threading.Thread(target=usar, args=(csocket, ))
+    t.start()
