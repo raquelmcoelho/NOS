@@ -7,6 +7,7 @@ BARALHO = []
 for cor in range(4):
     for content in range(13):
         BARALHO.append(Carta(CardColor(cor), CardContent(content)).__str__())
+
 for black_content in range(13, 15):
     BARALHO.append(Carta(CardColor(4), CardContent(black_content)).__str__())
     BARALHO.append(Carta(CardColor(4), CardContent(black_content)).__str__())
@@ -20,7 +21,7 @@ class Baralho:
     def _embaralhar():
         embaralhado = 2 * BARALHO.copy()
         random.shuffle(embaralhado)
-        embaralhado.reverse()
+        # embaralhado.reverse()
         return embaralhado
 
     def dividir(self, qtd_players):

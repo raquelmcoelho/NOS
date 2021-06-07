@@ -214,14 +214,18 @@ class Partida:
 
                 elif conteudo_jogada == "revert":
                     broadcast(self.jogadores, f"O jogador {name} reverteu o jogo")
-                    posicao = (self.vez % len(self.jogadores)) - 1
+                    posicao = int((self.vez % len(self.jogadores)))
+                    print("posicao, vez, len", posicao, self.vez, len(self.jogadores))
                     substituto = []
                     for i in range(len(self.jogadores)):
                         substituto.append(self.jogadores[posicao - 1])
+                        print("substituto", substituto)
                         posicao -= 1
                     self.jogadores.clear()
                     self.jogadores = substituto
-                    self.vez = 0
+                    print("agora os jogador tão assim oh", self.jogadores)
+                    self.vez = -1
+
         else:
             self.set_cor(socket)
             broadcast(self.jogadores, f"{name} ESCOLHEU A COR {self.colorir_carta([self.cor_carta_cima, ''])}")

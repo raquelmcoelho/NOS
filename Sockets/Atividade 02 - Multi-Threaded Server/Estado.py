@@ -6,4 +6,4 @@ class Estado(Enum):
     playing = 1
     ganhou = 2
     travado = 3
-    acabou = 4
+

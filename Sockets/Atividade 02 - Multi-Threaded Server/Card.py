@@ -34,5 +34,3 @@ class Carta:
 
     def __str__(self):
         return [str(self.color), str(self.content)]
-
-

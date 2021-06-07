@@ -5,6 +5,7 @@ from threading import *
 player = socket(AF_INET, SOCK_STREAM)
 player.connect(("127.0.0.1", 9997))
 
+
 lock = Lock()
 print("\033[40m{}".format(""))
 

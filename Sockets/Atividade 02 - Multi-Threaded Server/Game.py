@@ -16,7 +16,6 @@ def sala_de_espera(cliente, index, sala):
     nick = receber(cliente)
     print(nick, " é o nome do jogador ", index)
     clientes[index].append(nick)
-
     mandar(cliente, "Clique enter para iniciar a partida, se quiser sair digite q:")
     resposta = receber(cliente)
 
@@ -57,9 +56,10 @@ while True:
     print("Conectado a jogador ", len(clientes))
     if len(clientes) > 6:
         mandar(clientesocket, "SALA CHEIA")
+        sair(clientesocket)
         clientesocket.close()
+
     else:
         t = Thread(target=sala_de_espera, args=(clientesocket, len(clientes), qtdsalas))
         clientes.append([clientesocket])
         t.start()
-
