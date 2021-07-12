@@ -1,0 +1,63 @@
+body {
+    padding-left: 11em;
+    font-family: "Courier New", sans-serif;
+    color: black;
+    background-color: pink;
+}
+
+ul.navbar {
+    list-style-type: none;
+    padding: 0.8rem;
+    margin: 0;
+    position: absolute;
+    top: 2em;
+    left: 1em;
+    width: 9em
+}
+
+h1 {
+    font-family: "Castellar", sans-serif
+}
+
+ul.navbar li {
+    background: lightpink;
+    margin: 0.09em 0;
+    padding: 0.09em;
+    border-left: 1em solid indianred;
+}
+
+ul.navbar a {
+    text-decoration: None;
+}
+
+a:link {
+    color: blue;
+    font-size: 0.8rem;
+}
+
+a:visited {
+    color: purple;
+
+}
+
+a:hover {
+    color: white;
+    transition: 1s;
+    font-size: 15px;
+}
+
+.pintarpreto {
+    color: deeppink;
+}
+input {
+    color : chocolate;
+    background: aquamarine;
+    margin: 4px;
+
+}
+
+
+textarea {
+    background: coral;
+
+}

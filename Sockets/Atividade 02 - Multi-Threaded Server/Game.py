@@ -3,7 +3,7 @@ from Partida import *
 from socket import *
 
 Uno = socket(AF_INET, SOCK_STREAM)
-Uno.bind(("127.0.0.1", 9997))
+Uno.bind(("26.52.80.182", 9997))
 Uno.listen()
 
 print("\033[40m{}".format(""))

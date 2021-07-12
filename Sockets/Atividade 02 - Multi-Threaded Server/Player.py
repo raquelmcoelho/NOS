@@ -3,7 +3,7 @@ import pickle
 from threading import *
 
 player = socket(AF_INET, SOCK_STREAM)
-player.connect(("127.0.0.1", 9997))
+player.connect(("26.52.80.182", 9997))
 
 
 lock = Lock()
