@@ -1,3 +1,4 @@
+
 def init(title, page_ativa):
     if page_ativa == "Sobre":
         page_ativa = """
